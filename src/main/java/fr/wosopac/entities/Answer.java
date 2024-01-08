@@ -1,13 +1,10 @@
 package fr.wosopac.entities;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
-import jakarta.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 
@@ -19,10 +16,10 @@ public class Answer extends PanacheEntityBase {
             strategy = "org.hibernate.id.UUIDGenerator")
     public UUID id;
     public String value;
-    @OneToOne
+    @ManyToOne
     public Quizz quizz;
-    @OneToOne
+    @ManyToOne
     public Question question;
-    @OneToOne
+    @ManyToOne
     public AppUser appUser;
 }
