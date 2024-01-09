@@ -1,5 +1,6 @@
 package fr.wosopac.entities;
 
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
