@@ -26,32 +26,6 @@ const questions = [
     labelType: 3,
   },
   {
-    id: 'q5',
-    question: "Dans quelle mesure avez-vous rencontré des obstacles aujourd'hui ?",
-    labelType: 1,
-  },
-  { id: 'q6', question: "Comment évalueriez-vous le soutien reçu aujourd'hui ?", labelType: 2 },
-  {
-    id: 'q7',
-    question: 'Comment jugez-vous votre équilibre travail/vie personnelle cette semaine ?',
-    labelType: 3,
-  },
-  {
-    id: 'q8',
-    question: "Comment évalueriez-vous les opportunités d'apprentissage aujourd'hui ?",
-    labelType: 2,
-  },
-  {
-    id: 'q9',
-    question: "Quel a été l'impact de vos collègues ou événements sur votre humeur aujourd'hui ?",
-    labelType: 2,
-  },
-  {
-    id: 'q10',
-    question: "Quel est votre degré de satisfaction concernant l'environnement de travail ?",
-    labelType: 1,
-  },
-  {
     id: 'q11',
     question: "Avez-vous d'autres commentaires ou suggestions à partager ?",
     labelType: 4,
@@ -157,6 +131,7 @@ export default function QuizzView() {
           onChange={handleSliderChange}
           aria-labelledby="input-slider"
           sx={{
+            '.MuiSlider-markLabel': { fontSize: '24px' },
             '.MuiSlider-mark': { width: '4px', height: '12px', borderRadius: '5px' },
             '.MuiSlider-markActive': {
               bgcolor: 'primary.light',
@@ -177,14 +152,13 @@ export default function QuizzView() {
         Questionnaire ✅
       </Typography>
       <Card>
-        <CardContent>
-          <Stack gap={2}>
+        <CardContent sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+          <Stack gap={2} maxWidth="sm" alignItems="center" width="100%">
             <Typography variant="h6" sx={{ mb: 2 }}>
               {questions[currentQuestionIndex].question}
             </Typography>
-            {renderQuestionInput()}
-
-            <Stack direction="row" justifyContent="space-between">
+            <Stack width="100%">{renderQuestionInput()}</Stack>
+            <Stack direction="row" justifyContent="space-around" width="100%" mt={4}>
               <Button
                 variant="outlined"
                 onClick={handlePrevious}
