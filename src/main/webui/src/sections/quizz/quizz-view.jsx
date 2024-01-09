@@ -8,29 +8,10 @@ import { useEffect, useState } from 'react';
 import { Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
 
-const quizzId = 'quizz123';
-const userId = 'user123';
-
-const questions = [
-  { id: 'q1', question: "Comment vous sentez-vous aujourd'hui ?", labelType: 1 },
-  {
-    id: 'q2',
-    question: "À quel point êtes-vous satisfait de votre productivité aujourd'hui ?",
-    labelType: 2,
-  },
-  { id: 'q3', question: "À quel niveau avez-vous ressenti du stress aujourd'hui ?", labelType: 1 },
-  {
-    id: 'q4',
-    question: "Comment évalueriez-vous votre niveau d'énergie aujourd'hui ?",
-    labelType: 3,
-  },
-  {
-    id: 'q11',
-    question: "Avez-vous d'autres commentaires ou suggestions à partager ?",
-    labelType: 4,
-  },
-];
+const quizzId = '89ef7139-58d9-4a2e-911e-17ae5993acb2';
+const userId = '484270bd-9413-4768-98ff-110f95e7a626';
 
 const sliderLabels = {
   1: [
@@ -59,15 +40,30 @@ const sliderLabels = {
 export default function QuizzView() {
   const navigate = useNavigate();
 
+  const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const [answers, setAnswers] = useState(() => {
-    const savedAnswers = localStorage.getItem('goodMoodAnswers');
+    const savedAnswers = localStorage.getItem('goodMoodData');
     return savedAnswers ? JSON.parse(savedAnswers) : {};
   });
 
   useEffect(() => {
+    axios
+      .get('/quizz/' + quizzId)
+      .then((response) => {
+        setQuestions(response.data.questions);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Erreur lors du chargement du quizz:', error);
+        setIsLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
     const savedData = {
-      answers: Object.entries(answers).map(([questionId, value]) => ({
+      answers: questions.map((question) => ({
         quizz: {
           id: quizzId,
         },
@@ -75,13 +71,13 @@ export default function QuizzView() {
           id: userId,
         },
         question: {
-          id: questionId,
+          id: question.id,
         },
-        value: value.toString(),
+        value: answers[question.id]?.toString() ?? '0',
       })),
     };
     localStorage.setItem('goodMoodData', JSON.stringify(savedData));
-  }, [answers]);
+  }, [answers, questions]);
 
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
@@ -106,15 +102,37 @@ export default function QuizzView() {
   };
 
   const handleSubmit = () => {
-    console.log(localStorage.getItem('goodMoodAnswers'));
-    localStorage.removeItem('goodMoodAnswers');
+    const data = localStorage.getItem('goodMoodData');
+    const parsedData = JSON.parse(data);
 
-    navigate('/');
+    if (!parsedData) {
+      console.error('Aucune donnée à soumettre.');
+      return;
+    }
+
+    console.log(parsedData.answers);
+
+    axios
+      .post('/answer', parsedData.answers, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        console.log('Réponse du serveur :', response);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'envoi des données :", error);
+      })
+      .finally(() => {
+        localStorage.removeItem('goodMoodData');
+        navigate('/');
+      });
   };
 
   const renderQuestionInput = () => {
     const question = questions[currentQuestionIndex];
-    if (question.labelType === 4) {
+    if (question.type === 4) {
       return (
         <TextField
           fullWidth
@@ -140,11 +158,15 @@ export default function QuizzView() {
           min={0}
           max={4}
           step={1}
-          marks={sliderLabels[question.labelType]}
+          marks={sliderLabels[question.type]}
         />
       );
     }
   };
+
+  if (isLoading) {
+    return <div>Chargement...</div>;
+  }
 
   return (
     <Container maxWidth="xl">
@@ -155,7 +177,7 @@ export default function QuizzView() {
         <CardContent sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
           <Stack gap={2} maxWidth="sm" alignItems="center" width="100%">
             <Typography variant="h6" sx={{ mb: 2 }}>
-              {questions[currentQuestionIndex].question}
+              {questions[currentQuestionIndex].title}
             </Typography>
             <Stack width="100%">{renderQuestionInput()}</Stack>
             <Stack direction="row" justifyContent="space-around" width="100%" mt={4}>
