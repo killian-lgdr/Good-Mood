@@ -9,14 +9,14 @@ export default function AppView() {
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
-        Bonjour 👋
+        Dashboard Bien-être 👋
       </Typography>
 
       <Grid container spacing={3}>
         <Grid xs={12} md={12} lg={12}>
           <AppWebsiteVisits
-            title="Website Visits"
-            subheader="(+43%) than last year"
+            title="Évolution du Bien-être Global"
+            subheader="(comparé à l'année dernière)"
             chart={{
               labels: [
                 '01/01/2003',
@@ -33,10 +33,10 @@ export default function AppView() {
               ],
               series: [
                 {
-                  name: 'Team 1',
+                  name: 'Score de Bien-être',
                   type: 'area',
                   fill: 'gradient',
-                  data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
+                  data: [70, 75, 80, 65, 85, 90, 70, 80, 85, 88, 90, 95],
                 },
               ],
             }}
@@ -45,13 +45,12 @@ export default function AppView() {
 
         <Grid xs={12} md={6} lg={6}>
           <AppCurrentVisits
-            title="Current Visits"
+            title="Visites Actuelles"
             chart={{
               series: [
-                { label: 'America', value: 4344 },
-                { label: 'Asia', value: 5435 },
-                { label: 'Europe', value: 1443 },
-                { label: 'Africa', value: 4443 },
+                { label: 'Bureau', value: 3000 },
+                { label: 'Télétravail', value: 4500 },
+                { label: 'En déplacement', value: 1500 },
               ],
             }}
           />
@@ -59,13 +58,13 @@ export default function AppView() {
 
         <Grid xs={12} md={6} lg={6}>
           <AppCurrentSubject
-            title="Current Subject"
+            title="Sujets d'Intérêt"
             chart={{
-              categories: ['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math'],
+              categories: ['Relaxation', 'Productivité', 'Sport', 'Nutrition', 'Loisirs', 'Social'],
               series: [
-                { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
-                { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
-                { name: 'Series 3', data: [44, 76, 78, 13, 43, 10] },
+                { name: 'Bureau', data: [80, 50, 30, 40, 100, 20] },
+                { name: 'Télétravail', data: [20, 30, 40, 80, 20, 80] },
+                { name: 'En déplacement', data: [44, 76, 78, 13, 43, 10] },
               ],
             }}
           />

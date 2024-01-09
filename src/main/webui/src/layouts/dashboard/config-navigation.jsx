@@ -1,19 +1,21 @@
 import SvgColor from 'src/components/svg-color';
-
-const icon = (name) => (
-  <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
-);
+import Iconify from 'src/components/iconify/iconify';
 
 const navConfig = [
   {
     title: 'dashboard',
     path: '/',
-    icon: icon('ic_analytics'),
+    icon: <Iconify icon="solar:home-2-bold-duotone" width={24} />,
+  },
+  {
+    title: 'quizz',
+    path: '/quizz',
+    icon: <Iconify icon="solar:checklist-bold-duotone" width={24} />,
   },
   {
     title: 'logout',
     path: 'login',
-    icon: icon('ic_lock'),
+    icon: <Iconify icon="solar:login-3-bold-duotone" width={24} />,
   },
 ];
 
