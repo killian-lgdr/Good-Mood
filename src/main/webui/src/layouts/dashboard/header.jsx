@@ -1,7 +1,4 @@
 import PropTypes from 'prop-types';
-
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
@@ -12,14 +9,7 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import { bgBlur } from 'src/theme/css';
 
 import Iconify from 'src/components/iconify';
-
-import Searchbar from './common/searchbar';
-import { NAV, HEADER } from './config-layout';
-import AccountPopover from './common/account-popover';
-import LanguagePopover from './common/language-popover';
-import NotificationsPopover from './common/notifications-popover';
-
-// ----------------------------------------------------------------------
+import { HEADER, NAV } from './config-layout';
 
 export default function Header({ onOpenNav }) {
   const theme = useTheme();
@@ -28,23 +18,15 @@ export default function Header({ onOpenNav }) {
 
   const renderContent = (
     <>
-      {!lgUp && (
-        <IconButton onClick={onOpenNav} sx={{ mr: 1 }}>
-          <Iconify icon="eva:menu-2-fill" />
-        </IconButton>
-      )}
-
-      <Searchbar />
-
-      <Box sx={{ flexGrow: 1 }} />
-
-      <Stack direction="row" alignItems="center" spacing={1}>
-        <LanguagePopover />
-        <NotificationsPopover />
-        <AccountPopover />
-      </Stack>
+      <IconButton onClick={onOpenNav} sx={{ mr: 1 }}>
+        <Iconify icon="eva:menu-2-fill" />
+      </IconButton>
     </>
   );
+
+  if (lgUp) {
+    return;
+  }
 
   return (
     <AppBar
