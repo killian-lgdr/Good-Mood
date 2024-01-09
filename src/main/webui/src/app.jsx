@@ -17,7 +17,7 @@ export default function App() {
     <ThemeProvider>
       <ReactKeycloakProvider
         authClient={keycloak}
-        initOptions={{ onLoad: 'login-required', checkLoginFrame: false }}
+        initOptions={{ onLoad: 'login-required'}}
       >
         <Router />
       </ReactKeycloakProvider>
