@@ -94,9 +94,15 @@ export default function QuizzView() {
   useEffect(() => {
     const savedData = {
       answers: Object.entries(answers).map(([questionId, value]) => ({
-        quizz_id: quizzId,
-        user_id: userId,
-        question_id: questionId,
+        quizz: {
+          id: quizzId,
+        },
+        appUser: {
+          id: userId,
+        },
+        question: {
+          id: questionId,
+        },
         value: value.toString(),
       })),
     };
