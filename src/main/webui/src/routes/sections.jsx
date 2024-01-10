@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import { useKeycloak } from '@react-keycloak/web'; // Importation du hook pour utiliser Keycloak
 
@@ -11,24 +11,24 @@ export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 export default function Router() {
   const { initialized, keycloak } = useKeycloak(); // Récupération des données de Keycloak
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setIsAuthenticated(keycloak.authenticated);
+  }, []);
 
   if (!initialized) {
     return <div>Loading...</div>; // Attendre l'initialisation de Keycloak
   }
 
-  // Vérifier si l'utilisateur est authentifié
-  const isAuthenticated = keycloak.authenticated;
-
-  // Redirection vers Keycloak si non authentifié
   if (!isAuthenticated) {
-    keycloak.login(); // Redirection vers la page d'authentification Keycloak
-    return null; // Vous pouvez retourner null ou un composant de chargement en attendant la redirection
+    keycloak.login();
+    return null;
   }
 
   return useRoutes([
     {
       element: (
-        // Utilisation du composant DashboardLayout pour le layout
         <DashboardLayout>
           <Suspense>
             <Outlet />
