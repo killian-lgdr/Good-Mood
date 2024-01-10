@@ -1,6 +1,6 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense } from 'react';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
-import { useKeycloak } from '@react-keycloak/web'; // Importation du hook pour utiliser Keycloak
+import { useKeycloak } from 'keycloak-react-web'; // Importation du hook pour utiliser Keycloak
 
 import DashboardLayout from 'src/layouts/dashboard';
 
@@ -11,29 +11,25 @@ export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 export default function Router() {
   const { initialized, keycloak } = useKeycloak(); // Récupération des données de Keycloak
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    setIsAuthenticated(keycloak.authenticated);
-  }, []);
 
   if (!initialized) {
     return <div>Loading...</div>; // Attendre l'initialisation de Keycloak
   }
 
-  if (!isAuthenticated) {
-    keycloak.login();
-    return null;
-  }
-
   return useRoutes([
     {
       element: (
-        <DashboardLayout>
-          <Suspense>
-            <Outlet />
-          </Suspense>
-        </DashboardLayout>
+        // Utilisation du composant DashboardLayout pour le layout
+        <>
+          {keycloak.authenticated ? <DashboardLayout>
+            <Suspense>
+              <Outlet />
+            </Suspense>
+          </DashboardLayout> : <>
+
+          </>
+          }
+        </>
       ),
       children: [
         {
