@@ -18,7 +18,6 @@ import Scrollbar from 'src/components/scrollbar';
 import { NAV } from './config-layout';
 import navConfig from './config-navigation';
 
-
 export default function Nav({ openNav, onCloseNav }) {
   const pathname = usePathname();
 
@@ -96,7 +95,6 @@ Nav.propTypes = {
   openNav: PropTypes.bool,
   onCloseNav: PropTypes.func,
 };
-
 
 function NavItem({ item }) {
   const pathname = usePathname();

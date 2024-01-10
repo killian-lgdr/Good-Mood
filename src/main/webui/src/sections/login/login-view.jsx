@@ -14,10 +14,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useRouter } from 'src/routes/hooks';
 
 import { bgGradient } from 'src/theme/css';
-
+import { v4 as uuidv4 } from 'uuid';
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
-
 
 export default function LoginView() {
   const theme = useTheme();
@@ -25,15 +24,30 @@ export default function LoginView() {
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState('');
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
 
   const handleClick = () => {
+    const newUuid = uuidv4();
+    const userData = {
+      id: newUuid,
+      name: username,
+    };
+    localStorage.setItem('user', JSON.stringify(userData));
     router.push('/');
   };
 
   const renderForm = (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Adresse mail" />
+        <TextField
+          name="username"
+          label="Nom d'utilisateur"
+          value={username}
+          onChange={handleUsernameChange}
+        />
 
         <TextField
           name="mot de passe"
@@ -96,7 +110,9 @@ export default function LoginView() {
             maxWidth: 420,
           }}
         >
-          <Typography sx={{ mt: 2, mb: 5 }} variant="h4">Connectez vous sur Good Mood</Typography>
+          <Typography sx={{ mt: 2, mb: 5 }} variant="h4">
+            Connectez vous sur Good Mood
+          </Typography>
           {renderForm}
         </Card>
       </Stack>

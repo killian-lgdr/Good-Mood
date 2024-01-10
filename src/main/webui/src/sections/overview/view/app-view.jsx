@@ -6,10 +6,13 @@ import AppWebsiteVisits from '../app-website-visits';
 import AppCurrentSubject from '../app-current-subject';
 
 export default function AppView() {
+  const user = JSON.parse(localStorage.getItem('user'));
+
   return (
     <Container maxWidth="xl">
-      <Typography variant="h4" sx={{ mb: 5 }}>
-        Dashboard Bien-être 👋
+      <Typography variant="h4">Bonjour {user.name} 👋</Typography>
+      <Typography variant="h6" sx={{ mb: 5 }}>
+        Dashboard Bien-être
       </Typography>
 
       <Grid container spacing={3}>

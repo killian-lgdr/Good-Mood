@@ -11,7 +11,6 @@ import TextField from '@mui/material/TextField';
 import axios from 'axios';
 
 const quizzId = '89ef7139-58d9-4a2e-911e-17ae5993acb2';
-const userId = '484270bd-9413-4768-98ff-110f95e7a626';
 
 const sliderLabels = {
   1: [
@@ -39,6 +38,7 @@ const sliderLabels = {
 
 export default function QuizzView() {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -68,7 +68,7 @@ export default function QuizzView() {
           id: quizzId,
         },
         appUser: {
-          id: userId,
+          id: user.id,
         },
         question: {
           id: question.id,

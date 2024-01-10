@@ -1,4 +1,3 @@
-import SvgColor from 'src/components/svg-color';
 import Iconify from 'src/components/iconify/iconify';
 
 const navConfig = [
