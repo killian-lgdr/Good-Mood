@@ -64,15 +64,9 @@ export default function QuizzView() {
   useEffect(() => {
     const savedData = {
       answers: questions.map((question) => ({
-        quizz: {
-          id: quizzId,
-        },
-        appUser: {
-          id: user.id,
-        },
-        question: {
-          id: question.id,
-        },
+        quizz: { id: quizzId },
+        appUser: { id: user.id },
+        question: { id: question.id },
         value: answers[question.id]?.toString() ?? '0',
       })),
     };
@@ -81,8 +75,6 @@ export default function QuizzView() {
 
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
-      const currentAnswer = answers[currentQuestionIndex] ?? 0;
-      setAnswers({ ...answers, [currentQuestionIndex]: currentAnswer });
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
   };
@@ -94,23 +86,24 @@ export default function QuizzView() {
   };
 
   const handleSliderChange = (_, newValue) => {
-    setAnswers({ ...answers, [currentQuestionIndex]: newValue });
+    const questionId = questions[currentQuestionIndex].id;
+    setAnswers({ ...answers, [questionId]: newValue });
   };
 
-  const handleInputChange = (newValue) => {
-    setAnswers({ ...answers, [currentQuestionIndex]: newValue });
+  const handleInputChange = (e) => {
+    const questionId = questions[currentQuestionIndex].id;
+    setAnswers({ ...answers, [questionId]: e.target.value });
   };
 
   const handleSubmit = () => {
     const data = localStorage.getItem('goodMoodData');
     const parsedData = JSON.parse(data);
+    console.log('Données à soumettre :', parsedData);
 
     if (!parsedData) {
       console.error('Aucune donnée à soumettre.');
       return;
     }
-
-    console.log(parsedData.answers);
 
     axios
       .post('/answer', parsedData.answers, {
@@ -132,20 +125,22 @@ export default function QuizzView() {
 
   const renderQuestionInput = () => {
     const question = questions[currentQuestionIndex];
+    const currentAnswer = answers[question.id];
+
     if (question.type === 4) {
       return (
         <TextField
           fullWidth
           multiline
           rows={4}
-          value={answers[currentQuestionIndex] || ''}
-          onChange={(e) => handleInputChange(e.target.value)}
+          value={currentAnswer || ''}
+          onChange={handleInputChange}
         />
       );
     } else {
       return (
         <Slider
-          value={answers[currentQuestionIndex] ?? 0}
+          value={typeof currentAnswer === 'number' ? currentAnswer : 0}
           onChange={handleSliderChange}
           aria-labelledby="input-slider"
           sx={{
