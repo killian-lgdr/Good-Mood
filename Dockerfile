@@ -1,13 +1,13 @@
 # First stage: Build the application
 FROM maven:3.8.4-openjdk-17 AS build
 
-WORKDIR /usr/src/app
+# Download and install Node.js
+RUN curl -sL https://nodejs.org/dist/v20.10.0/node-v20.10.0-linux-x64.tar.gz | tar -xz -C /usr/local --strip-components=1
+RUN npm install -g yarn
 
+WORKDIR /usr/src/app
 COPY pom.xml .
 COPY src ./src
-COPY .mvn ./.mvn
-COPY mvnw .
-COPY mvnw.cmd .
 
 RUN mvn package
 
@@ -20,6 +20,9 @@ COPY --chown=185 --from=build /usr/src/app/target/quarkus-app/lib/ /deployments/
 COPY --chown=185 --from=build /usr/src/app/target/quarkus-app/*.jar /deployments/
 COPY --chown=185 --from=build /usr/src/app/target/quarkus-app/app/ /deployments/app/
 COPY --chown=185 --from=build /usr/src/app/target/quarkus-app/quarkus/ /deployments/quarkus/
+
+# Copy Node.js from the first stage
+COPY --from=build /usr/local/bin/node /usr/local/bin/
 
 EXPOSE 8080
 USER 185
