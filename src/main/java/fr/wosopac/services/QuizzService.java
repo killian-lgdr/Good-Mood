@@ -1,8 +1,12 @@
 package fr.wosopac.services;
 
+import fr.wosopac.entities.Question;
 import fr.wosopac.entities.Quizz;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.UriInfo;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,5 +25,13 @@ public class QuizzService {
     @Transactional(SUPPORTS)
     public Quizz findQuizzById(UUID id) {
         return Quizz.findById(id);
+    }
+
+    public void persistQuizz(@Valid Quizz quizz, @Context UriInfo uriInfo){
+        QuestionService questionService = new QuestionService();
+        for (Question question : quizz.questions) {
+            questionService.persistQuestion(question, uriInfo);
+        }
+        Quizz.persist(quizz);
     }
 }

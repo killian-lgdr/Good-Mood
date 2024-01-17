@@ -15,9 +15,8 @@ import static jakarta.transaction.Transactional.TxType.REQUIRED;
 @Transactional(REQUIRED)
 public class AnswerService {
 
-    public Answer persistAnswer(Answer answer) {
+    public void persistAnswer(Answer answer) {
         answer.persist();
-        return answer;
     }
 
     public Quizz findQuizzById(UUID quizzId) {

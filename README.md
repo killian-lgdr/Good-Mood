@@ -68,7 +68,7 @@ Assurez-vous d'avoir installé Docker et Docker Compose sur votre machine.
    Pour arrêter le projet, utilisez la commande suivante dans le répertoire du projet :
 
    ```bash
-   docker-compose down
+   docker compose down
    ```
 
 ### Variables d'Environnement du Docker Compose
