@@ -1,82 +1,88 @@
-# good-mood
+# Projet Good Mood - Documentation Utilisateur
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+## Présentation du Projet
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+Le projet Good Mood a été conçu pour renforcer le bien-être au travail des collaborateurs de SatisfActes. L'objectif principal est de développer une application interne permettant de mesurer et d'analyser l’humeur des employés de manière régulière. Cette initiative s'inscrit dans une démarche de bien-être au travail, cruciale pour maintenir la compétitivité et l'attrait de l'entreprise sur le marché du travail.
 
-## Running the application in dev mode
+### Architecture du Projet
 
-You can run your application in dev mode that enables live coding using:
-```shell script
-./mvnw compile quarkus:dev
-```
+Le projet est constitué de plusieurs composants interconnectés pour assurer son bon fonctionnement. Voici une vue d'ensemble de l'architecture :
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+- **Base de données PostgreSQL (postgres) :** Stocke les données relatives aux réponses des questionnaires sur l'humeur des employés.
 
-## Packaging and running the application
+- **Application Quarkus (quarkus-app) :** Le backend de l'application, construit avec Quarkus, gère la logique métier et communique avec la base de données. Il expose des API pour la collecte et l'analyse des données sur l'humeur.
 
-The application can be packaged using:
-```shell script
-./mvnw package
-```
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+- **Frontend React (Quinoa) :** L'interface utilisateur est développée en React et servie par le gestionnaire de packages Quinoa. Elle permet aux utilisateurs de répondre aux questionnaires et de visualiser des statistiques sur leur humeur.
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+### Mise en Route du Projet
 
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./mvnw package -Dquarkus.package.type=uber-jar
-```
+Suivez ces étapes pour mettre en route le projet sur votre environnement local.
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+#### Prérequis
 
-## Creating a native executable
+Assurez-vous d'avoir installé Docker et Docker Compose sur votre machine.
 
-You can create a native executable using: 
-```shell script
-./mvnw package -Dnative
-```
+#### Étapes
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
+1. **Clonage du Projet :**
 
-You can then execute your native executable with: `./target/good-mood-1.0.0-runner`
+   ```bash
+   git https://github.com/killian-lgdr/Good-Mood.git
+   cd Good-Mood
+   ```
 
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
+2. **Configuration de la Base de Données :**
 
-## Related Guides
+   Aucune configuration n'est nécessaire pour la base de données PostgreSQL, car le conteneur Docker est configuré avec des paramètres par défaut. Cependant, assurez-vous que le port 5432 est disponible sur votre machine.
 
-- Hibernate ORM ([guide](https://quarkus.io/guides/hibernate-orm)): Define your persistent model with Hibernate ORM and Jakarta Persistence
-- Hibernate Validator ([guide](https://quarkus.io/guides/validation)): Validate object properties (field, getter) and method parameters for your beans (REST, CDI, Jakarta Persistence)
-- SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Document your REST APIs with OpenAPI - comes with Swagger UI
-- RESTEasy Reactive ([guide](https://quarkus.io/guides/resteasy-reactive)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- OpenID Connect ([guide](https://quarkus.io/guides/security-openid-connect)): Verify Bearer access tokens and authenticate users with Authorization Code Flow
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
-- SmallRye Health ([guide](https://quarkus.io/guides/smallrye-health)): Monitor service health
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
+3. **Construction de l'Application Quarkus :**
 
-## Provided Code
+   ```bash
+   docker compose build quarkus-app
+   ```
 
-### Hibernate ORM
+4. **Lancement du Projet :**
 
-Create your first JPA entity
+   ```bash
+   docker compose up
+   ```
 
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
+   Cette commande démarre les services PostgreSQL et Quarkus. L'application sera accessible à l'adresse [http://localhost:8080](http://localhost:8080).
 
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
+5. **Accès à l'Interface Utilisateur :**
 
+   Ouvrez un navigateur web et accédez à [http://localhost:8080](http://localhost:8080) pour accéder à l'interface utilisateur.
 
-### RESTEasy Reactive
+6. **Répondre au Questionnaire :**
 
-Easily start your Reactive RESTful Web Services
+    - Connectez-vous à l'application.
+    - Accédez à la section dédiée aux questionnaires.
+    - Remplissez le questionnaire sur votre humeur actuelle.
 
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+7. **Visualiser les Statistiques :**
 
-### SmallRye Health
+    - Naviguez vers la section des statistiques pour obtenir des informations détaillées sur l'humeur des employés.
 
-Monitor your application's health using SmallRye Health
+8. **Arrêt du Projet :**
 
-[Related guide section...](https://quarkus.io/guides/smallrye-health)
+   Pour arrêter le projet, utilisez la commande suivante dans le répertoire du projet :
+
+   ```bash
+   docker-compose down
+   ```
+
+### Variables d'Environnement du Docker Compose
+
+Le fichier `compose.yml` du projet utilise des variables d'environnement pour la configuration de l'application Quarkus. Voici une explication des variables disponibles :
+
+- **DATASOURCE_GENERATION (par défaut: drop-and-create) :** Cette variable détermine la génération de la base de données lors de la phase de développement. Vous pouvez la modifier si nécessaire.
+
+- **DATASOURCE_SCRIPT (par défaut: import.sql) :** Spécifie le script SQL à exécuter lors de la création de la base de données en mode production.
+
+- **DATASOURCE_USERNAME (par défaut: quarkus) :** Nom d'utilisateur de la base de données.
+
+- **DATASOURCE_PASSWORD (par défaut: quarkus) :** Mot de passe de la base de données.
+
+- **DATASOURCE_JDBC_URL (par défaut: jdbc:postgresql://postgres:5432/quarkus) :** URL JDBC de la base de données PostgreSQL.
+
+Ces variables peuvent être ajustées en fonction de vos besoins spécifiques. Pour ce faire, modifiez le fichier `compose.yml` avant de lancer le projet.
