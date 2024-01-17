@@ -1,10 +1,10 @@
 package fr.wosopac.resources;
 
-import fr.wosopac.entities.Answer;
 import fr.wosopac.entities.Quizz;
 import fr.wosopac.services.QuizzService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -45,8 +45,16 @@ public class QuizzResource {
     @POST
     @Transactional
     public RestResponse<Void> createQuizz(@Valid Quizz quizz, @Context UriInfo uriInfo){
-        quizzService.persistQuizz(quizz, uriInfo);
+        quizzService.persistQuizz(quizz);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path("quizz");
         return RestResponse.created(builder.build());
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Transactional
+    public RestResponse<Void> deleteQuizz(@RestPath UUID id) {
+        quizzService.deleteQuizzById(id);
+        return RestResponse.ok();
     }
 }

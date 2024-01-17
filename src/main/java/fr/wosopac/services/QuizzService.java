@@ -5,8 +5,7 @@ import fr.wosopac.entities.Quizz;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.UriInfo;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -27,11 +26,20 @@ public class QuizzService {
         return Quizz.findById(id);
     }
 
-    public void persistQuizz(@Valid Quizz quizz, @Context UriInfo uriInfo){
+    public void persistQuizz(@Valid Quizz quizz) {
         QuestionService questionService = new QuestionService();
         for (Question question : quizz.questions) {
-            questionService.persistQuestion(question, uriInfo);
+            questionService.persistQuestion(question);
         }
         Quizz.persist(quizz);
+    }
+
+    public void deleteQuizzById(UUID id) {
+        Quizz quizz = findQuizzById(id);
+        for (Question question : quizz.questions) {
+            QuestionService.deleteQuestionById(question.id);
+        }
+
+        Quizz.deleteById(id);
     }
 }
