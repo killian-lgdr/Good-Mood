@@ -8,7 +8,7 @@ const navConfig = [
   },
   {
     title: 'quizz',
-    path: '/quizz',
+    path: '/start',
     icon: <Iconify icon="solar:checklist-bold-duotone" width={24} />,
   },
   {

@@ -1,14 +1,14 @@
+import { Stack } from '@mui/material';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import Slider from '@mui/material/Slider';
-import Typography from '@mui/material/Typography';
-import { useEffect, useState } from 'react';
-import { Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const quizzId = '89ef7139-58d9-4a2e-911e-17ae5993acb2';
 

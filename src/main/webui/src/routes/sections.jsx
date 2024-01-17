@@ -6,6 +6,7 @@ import PrivateRoute from './private-route';
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const QuizzPage = lazy(() => import('src/pages/quizz'));
 export const LoginPage = lazy(() => import('src/pages/login'));
+export const QuizzStartPage = lazy(() => import('src/pages/start'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 export default function Router() {
@@ -28,6 +29,10 @@ export default function Router() {
         {
           path: 'quizz',
           element: <QuizzPage />,
+        },
+        {
+          path: 'start',
+          element: <QuizzStartPage />,
         },
       ],
     },
