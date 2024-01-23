@@ -6,7 +6,7 @@ export default function QuizzPage() {
   return (
     <>
       <Helmet>
-        <title> Quizz | Good Mood </title>
+        <title> Questionnaire | Good Mood </title>
       </Helmet>
 
       <QuizzStart />

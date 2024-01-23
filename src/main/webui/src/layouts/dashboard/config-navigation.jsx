@@ -2,22 +2,22 @@ import Iconify from 'src/components/iconify/iconify';
 
 const navConfig = [
   {
-    title: 'dashboard',
+    title: 'accueil',
     path: '/',
     icon: <Iconify icon="solar:home-2-bold-duotone" width={24} />,
   },
   {
-    title: 'quizz',
+    title: 'questionnaire quotidien',
     path: '/start',
     icon: <Iconify icon="solar:checklist-bold-duotone" width={24} />,
   },
   {
-    title: 'Créer',
-    path: 'create',
+    title: 'questionnaires',
+    path: '/create',
     icon: <Iconify icon="solar:document-add-bold-duotone" width={24} />,
   },
   {
-    title: 'logout',
+    title: 'Déconnexion',
     path: 'login',
     icon: <Iconify icon="solar:login-3-bold-duotone" width={24} />,
   },

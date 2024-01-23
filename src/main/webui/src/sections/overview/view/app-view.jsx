@@ -1,11 +1,9 @@
-import { CardContent, CardHeader, Divider, List, ListItem, ListItemText } from '@mui/material';
-import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
-import AppCurrentVisits from '../app-current-visits';
-import AppWebsiteVisits from '../app-website-visits';
-import React from 'react';
+import AppHistoryCard from '../app-history-card';
+import AppPositionCard from '../app-position-card';
+import { AppSuggestionsCard } from '../app-suggestions-card';
 
 const plotSeries = [
   {
@@ -68,19 +66,6 @@ const lineSeries = [
   },
 ];
 
-const generateLabels = (dataLength) => {
-  const labels = [];
-  const currentDate = new Date();
-
-  for (let i = 0; i < dataLength; i++) {
-    const date = new Date(currentDate.getTime() - i * 24 * 60 * 60 * 1000);
-    const formattedDate = date.toISOString().split('T')[0];
-    labels.unshift(formattedDate);
-  }
-
-  return labels;
-};
-
 const suggestions = [
   {
     id: 1,
@@ -122,7 +107,36 @@ const suggestions = [
     id: 10,
     name: 'Améliorer l’environnement de travail (espaces verts, salles de repos)',
   },
+  {
+    id: 11,
+    name: 'Mettre en place un système de reconnaissance des employés',
+  },
+  {
+    id: 12,
+    name: 'Organiser des événements d’entreprise',
+  },
+  {
+    id: 13,
+    name: 'Mettre en place un système de récompense pour les employés',
+  },
+  {
+    id: 14,
+    name: 'Mettre en place un système de récompense pour les employés',
+  },
 ];
+
+const generateLabels = (dataLength) => {
+  const labels = [];
+  const currentDate = new Date();
+
+  for (let i = 0; i < dataLength; i++) {
+    const date = new Date(currentDate.getTime() - i * 24 * 60 * 60 * 1000);
+    const formattedDate = date.toISOString().split('T')[0];
+    labels.unshift(formattedDate);
+  }
+
+  return labels;
+};
 
 export default function AppView() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -134,12 +148,12 @@ export default function AppView() {
     <Container maxWidth="xl">
       <Typography variant="h4">Bonjour {user.name} 👋</Typography>
       <Typography variant="h6" sx={{ mb: 5 }}>
-        Dashboard Bien-être
+        Vue Bien-être
       </Typography>
 
       <Grid container spacing={3}>
         <Grid xs={12} md={6} lg={6}>
-          <AppCurrentVisits
+          <AppPositionCard
             title={'Positionement du Bien-être Global du ' + formattedDate}
             chart={{
               series: plotSeries,
@@ -147,7 +161,7 @@ export default function AppView() {
           />
         </Grid>
         <Grid xs={12} md={6} lg={6}>
-          <AppWebsiteVisits
+          <AppHistoryCard
             title="Évolution du Bien-être Global"
             chart={{
               labels: labels,
@@ -156,24 +170,7 @@ export default function AppView() {
           />
         </Grid>
         <Grid xs={12} md={12} lg={12}>
-          <Card raised>
-            <CardHeader
-              title="Suggestions d'Amélioration"
-              titleTypographyProps={{ align: 'center' }}
-            />
-            <CardContent>
-              <List>
-                {suggestions.map((suggestion, index) => (
-                  <React.Fragment key={suggestion.id}>
-                    <ListItem>
-                      <ListItemText primary={`${index + 1}. ${suggestion.name}`} />
-                    </ListItem>
-                    {index !== suggestions.length - 1 && <Divider component="li" />}
-                  </React.Fragment>
-                ))}
-              </List>
-            </CardContent>
-          </Card>
+          <AppSuggestionsCard suggestions={suggestions} />
         </Grid>
       </Grid>
     </Container>

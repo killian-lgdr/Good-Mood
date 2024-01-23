@@ -32,6 +32,8 @@ export const sliderLabels = {
     { value: 3, label: '🏃‍♂️' }, // Élevé
     { value: 4, label: '🚀' }, // Très élevé
   ],
+  4: [{ value: 0, label: 'Suggestion continue' }],
+  5: [{ value: 0, label: 'Question ouverte' }],
 };
 
 export default function QuizzView({ quizzId }) {
@@ -125,11 +127,12 @@ export default function QuizzView({ quizzId }) {
     const question = questions[currentQuestionIndex];
     const currentAnswer = answers[question.id];
 
-    if (question.type === 4) {
+    if (question.type === 4 || question.type === 5) {
       return (
         <TextField
           fullWidth
           multiline
+          placeholder={question.type === 4 ? 'Suggestion continue' : 'Question ouverte'}
           rows={4}
           value={currentAnswer || ''}
           onChange={handleInputChange}

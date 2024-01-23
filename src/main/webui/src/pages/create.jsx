@@ -31,13 +31,13 @@ export default function CreateQuizzPage() {
   return (
     <>
       <Helmet>
-        <title>Good Mood | Quizz</title>
+        <title>Good Mood | Questionnaires</title>
       </Helmet>
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={tabValue} onChange={handleChange} aria-label="quizz tabs">
-          <Tab label="Tous les quizz" />
-          <Tab label="Nouveau quizz" />
+          <Tab label="Questionnaires" />
+          <Tab label="Création" />
         </Tabs>
       </Box>
 

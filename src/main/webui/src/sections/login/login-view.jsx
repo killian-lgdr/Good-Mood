@@ -1,22 +1,22 @@
 import { useState } from 'react';
 
+import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import LoadingButton from '@mui/lab/LoadingButton';
 import { alpha, useTheme } from '@mui/material/styles';
-import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
 
+import Iconify from 'src/components/iconify';
+import Logo from 'src/components/logo';
 import { bgGradient } from 'src/theme/css';
 import { v4 as uuidv4 } from 'uuid';
-import Logo from 'src/components/logo';
-import Iconify from 'src/components/iconify';
 
 export default function LoginView() {
   const theme = useTheme();
@@ -79,7 +79,7 @@ export default function LoginView() {
         color="inherit"
         onClick={handleClick}
       >
-        Se connecter
+        Connexion
       </LoadingButton>
     </>
   );

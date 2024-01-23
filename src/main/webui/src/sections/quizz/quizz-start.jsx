@@ -13,7 +13,7 @@ export const QuizzStart = () => {
     <Stack height="100%" alignItems="center" justifyContent="center" gap={10}>
       <Stack gap={2}>
         <Typography variant="h2">Quiz</Typography>
-        <Typography>Vous allez commencer le quiz hebdomadaire</Typography>
+        <Typography>Vous allez commencer le questionnaire quotidien </Typography>
       </Stack>
 
       <QuizzStartIllustration />

@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import Chart from 'src/components/chart';
 
-export default function AppCurrentVisits({ title, subheader, chart, ...other }) {
+export default function AppPositionCard({ title, subheader, chart, ...other }) {
   const theme = useTheme();
 
   const { colors, series, options } = chart;
@@ -57,7 +57,7 @@ export default function AppCurrentVisits({ title, subheader, chart, ...other }) 
   );
 }
 
-AppCurrentVisits.propTypes = {
+AppPositionCard.propTypes = {
   chart: PropTypes.object,
   subheader: PropTypes.string,
   title: PropTypes.string,
