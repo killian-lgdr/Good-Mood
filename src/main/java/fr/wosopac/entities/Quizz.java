@@ -15,7 +15,7 @@ public class Quizz extends PanacheEntityBase {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator")
+            type = org.hibernate.id.uuid.UuidGenerator.class)
     public UUID id;
     public String name;
     public int type;
