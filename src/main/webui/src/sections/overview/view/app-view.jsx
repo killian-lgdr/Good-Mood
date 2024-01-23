@@ -36,6 +36,7 @@ export default function AppView() {
         const res = await axios.get('/answer/averageByDay');
 
         const updatedSeries = res.data.map((item) => ({
+          ...item,
           data: item.data.map((value) => value * 25),
           type: 'area',
           fill: 'gradient',
@@ -67,7 +68,9 @@ export default function AppView() {
     const getSuggestions = async () => {
       try {
         const res = await axios.get('/answer/proposal');
-        setSuggestions(res.data);
+        //remove "0" values
+        const updatedSeries = res.data.filter((s) => s !== '0');
+        setSuggestions(updatedSeries);
       } catch (error) {
         setSuggestions([]);
       }
