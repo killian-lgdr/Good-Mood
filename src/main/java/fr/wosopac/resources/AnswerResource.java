@@ -12,10 +12,14 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.UriInfo;
+import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestResponse;
 import jakarta.ws.rs.core.UriBuilder;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Path("/answer")
 public class AnswerResource {
@@ -28,7 +32,10 @@ public class AnswerResource {
     @POST
     @Transactional
     public RestResponse<Void> createAnswer(@Valid List<Answer> answers, @Context UriInfo uriInfo) {
+        LocalDate currentDate = LocalDate.now();
         for (Answer answer : answers) {
+
+            answer.date = currentDate;
             Quizz quizz = answerService.findQuizzById(answer.quizz.id);
             AppUser appUser = answerService.findAppUserById(answer.appUser.id);
             Question question = answerService.findQuestionById(answer.question.id);
@@ -54,5 +61,12 @@ public class AnswerResource {
 
         UriBuilder builder = uriInfo.getAbsolutePathBuilder().path("answers");
         return RestResponse.created(builder.build());
+    }
+
+    @GET
+    @Path("/average/{id}")
+    public RestResponse<Map<LocalDate, Double>> getAverageByQuestionAndDay(@RestPath UUID id) {
+        Map<LocalDate, Double> averageByDay = answerService.calculateAverageByQuestionAndDay(id);
+        return RestResponse.ok(averageByDay);
     }
 }

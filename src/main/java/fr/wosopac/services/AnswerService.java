@@ -7,7 +7,11 @@ import fr.wosopac.entities.Quizz;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static jakarta.transaction.Transactional.TxType.REQUIRED;
 
@@ -29,5 +33,16 @@ public class AnswerService {
 
     public Question findQuestionById(UUID questionId) {
         return Question.findById(questionId);
+    }
+
+    public static void deleteAnswerById(UUID id) {
+        Answer.deleteById(id);
+    }
+    public Map<LocalDate, Double> calculateAverageByQuestionAndDay(UUID questionId) {
+        List<Answer> answers = Answer.find("question.id", questionId).list();
+
+        return answers.stream()
+                .collect(Collectors.groupingBy(answer -> answer.date,
+                        Collectors.averagingDouble(answer -> Double.parseDouble(answer.value))));
     }
 }
