@@ -24,7 +24,8 @@ export default function AppView() {
   const user = JSON.parse(localStorage.getItem('user'));
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString('fr-FR');
-  const labels = generateLabels(14);
+  //set labels based on the data length from lineSeries
+  const [labels, setLabels] = useState([]);
 
   const [lineSeries, setLineSeries] = useState([]);
   const [plotSeries, setPlotSeries] = useState([]);
@@ -34,13 +35,16 @@ export default function AppView() {
     const getLineSeries = async () => {
       try {
         const res = await axios.get('/answer/averageByDay');
-
-        const updatedSeries = res.data.map((item) => ({
-          ...item,
-          data: item.data.map((value) => value * 25),
-          type: 'area',
-          fill: 'gradient',
-        }));
+        const labels = generateLabels(res.data[0].data.length);
+        setLabels(labels);
+        const updatedSeries = res.data.map((item) => {
+          return {
+            ...item,
+            data: item.data.map((value) => value * 25),
+            type: 'area',
+            fill: 'gradient',
+          };
+        });
 
         setLineSeries(updatedSeries);
       } catch (error) {

@@ -34,12 +34,20 @@ export default function AppPositionCard({ title, subheader, chart, ...other }) {
           const yVal = val;
           return `Énergie: ${xVal}%<br>Bonne Humeur: ${yVal}%`;
         },
+        title: {
+          formatter: function () {
+            return '';
+          },
+        },
       },
     },
     xaxis: {
       min: 0,
       max: 100,
       tickAmount: 10,
+      labels: {
+        formatter: (value) => `${value.toFixed(0)}`,
+      },
       title: {
         text: 'Énergie',
         style: {
@@ -52,6 +60,9 @@ export default function AppPositionCard({ title, subheader, chart, ...other }) {
       min: 0,
       max: 100,
       tickAmount: 10,
+      labels: {
+        formatter: (value) => `${value.toFixed(0)}`,
+      },
       title: {
         text: 'Bonne Humeur',
         style: {

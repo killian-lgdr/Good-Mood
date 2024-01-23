@@ -22,6 +22,12 @@ export default function AppHistoryCard({ title, subheader, chart, ...other }) {
       type: series.map((i) => i.fill),
     },
     labels,
+    yaxis: {
+      max: 100,
+      labels: {
+        formatter: (value) => `${value.toFixed(0)}`,
+      },
+    },
     xaxis: {
       type: 'datetime',
     },
