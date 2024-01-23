@@ -28,9 +28,9 @@ export const AppSuggestionsCard = ({ suggestions }) => {
       <CardContent>
         <List>
           {paginatedSuggestions.map((suggestion, index) => (
-            <React.Fragment key={suggestion.id}>
+            <React.Fragment key={index}>
               <ListItem>
-                <ListItemText primary={`${startIndex + index + 1}. ${suggestion.name}`} />
+                <ListItemText primary={`${startIndex + index + 1}. ${suggestion}`} />
               </ListItem>
               {index !== paginatedSuggestions.length - 1 && <Divider component="li" />}
             </React.Fragment>

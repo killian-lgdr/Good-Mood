@@ -21,6 +21,21 @@ export default function AppPositionCard({ title, subheader, chart, ...other }) {
       foreColor: theme.palette.text.disabled,
       fontFamily: theme.typography.fontFamily,
     },
+    tooltip: {
+      enabled: true,
+      x: {
+        formatter: function () {
+          return 'Energie/Bonne Humeur';
+        },
+      },
+      y: {
+        formatter: function (val, { seriesIndex, dataPointIndex, w }) {
+          const xVal = w.globals.seriesX[seriesIndex][dataPointIndex];
+          const yVal = val;
+          return `Énergie: ${xVal}%<br>Bonne Humeur: ${yVal}%`;
+        },
+      },
+    },
     xaxis: {
       min: 0,
       max: 100,

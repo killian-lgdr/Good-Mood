@@ -19,7 +19,6 @@ export const CreateView = () => {
   const [type, setType] = useState(0);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState('info');
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
@@ -59,12 +58,11 @@ export const CreateView = () => {
       .post('/quizz', formattedQuizz)
       .then((res) => {
         setSnackbarMessage('Quiz créé avec succès!');
-        setSnackbarSeverity('success');
+        ('success');
         setOpenSnackbar(true);
       })
       .catch((error) => {
         setSnackbarMessage('Erreur lors de la création du quiz');
-        setSnackbarSeverity('error');
         setOpenSnackbar(true);
       });
   };
@@ -73,7 +71,7 @@ export const CreateView = () => {
       <Stack spacing={3} sx={{ p: 3 }}>
         <Typography variant="h4">Créer un Quizz</Typography>
 
-        <Stack direction="row" gap={2}>
+        <Stack direction={{ xs: 'column', md: 'row' }} gap={2}>
           <TextField
             sx={{ flex: 1 }}
             label="Titre du Quizz"
@@ -90,7 +88,7 @@ export const CreateView = () => {
         </Stack>
 
         {questions.map((question, index) => (
-          <Stack key={index} direction="row" spacing={2}>
+          <Stack key={index} direction={{ xs: 'column', md: 'row' }} spacing={2}>
             <TextField
               sx={{ flex: 1 }}
               label={`Question ${index + 1}`}
@@ -98,9 +96,6 @@ export const CreateView = () => {
               value={question.title}
               onChange={(e) => handleChangeQuestionTitle(index, e.target.value)}
             />
-            <Button onClick={() => handleRemoveQuestion(index)}>
-              <Iconify icon="eva:trash-2-outline" />
-            </Button>
             <Select
               value={question.type.toString()}
               onChange={(e) => handleChangeQuestionType(index, e.target.value)}
@@ -124,6 +119,9 @@ export const CreateView = () => {
                 );
               })}
             </Select>
+            <Button onClick={() => handleRemoveQuestion(index)}>
+              <Iconify icon="eva:trash-2-outline" />
+            </Button>
           </Stack>
         ))}
 
