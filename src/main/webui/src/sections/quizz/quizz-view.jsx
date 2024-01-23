@@ -10,9 +10,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const quizzId = '89ef7139-58d9-4a2e-911e-17ae5993acb2';
-
-const sliderLabels = {
+export const sliderLabels = {
   1: [
     { value: 0, label: '😡' }, // Très insatisfait
     { value: 1, label: '😕' }, // Insatisfait
@@ -36,7 +34,7 @@ const sliderLabels = {
   ],
 };
 
-export default function QuizzView() {
+export default function QuizzView({ quizzId }) {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
 

@@ -6,7 +6,7 @@ export const QuizzStart = () => {
   const navigate = useNavigate();
 
   const handleClicked = () => {
-    navigate('/quizz');
+    navigate('/quizz/89ef7139-58d9-4a2e-911e-17ae5993acb2');
   };
 
   return (
