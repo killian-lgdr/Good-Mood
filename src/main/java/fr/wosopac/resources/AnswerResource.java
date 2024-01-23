@@ -12,14 +12,12 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.UriInfo;
-import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestResponse;
 import jakarta.ws.rs.core.UriBuilder;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Path("/answer")
 public class AnswerResource {
@@ -64,9 +62,21 @@ public class AnswerResource {
     }
 
     @GET
-    @Path("/average/{id}")
-    public RestResponse<Map<LocalDate, Double>> getAverageByQuestionAndDay(@RestPath UUID id) {
-        Map<LocalDate, Double> averageByDay = answerService.calculateAverageByQuestionAndDay(id);
+    @Path("/coordinate")
+    public RestResponse<List<List<Double>>> getCoordinates() {
+        List<List<Double>> coordinates = answerService.calculateCoordinates();
+        return RestResponse.ok(coordinates);
+    }
+    @GET
+    @Path("/averageByDay")
+    public RestResponse<List<Map<String, Object>>> getAverageByDay() {
+        List<Map<String, Object>> averageByDay = answerService.calculateAverageByDay();
         return RestResponse.ok(averageByDay);
+    }
+    @GET
+    @Path("/proposal")
+    public RestResponse<List<String>> getProposals() {
+        List<String> proposalValues = answerService.getProposalValues();
+        return RestResponse.ok(proposalValues);
     }
 }
