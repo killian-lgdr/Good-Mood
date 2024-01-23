@@ -7,15 +7,12 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import org.hibernate.annotations.GenericGenerator;
-
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 public class Answer extends PanacheEntityBase {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID",
-            type = org.hibernate.id.uuid.UuidGenerator.class)
+    @UuidGenerator
     public UUID id;
     public String value;
     public LocalDate date;
