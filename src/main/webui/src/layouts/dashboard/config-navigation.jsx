@@ -1,41 +1,25 @@
-import SvgColor from 'src/components/svg-color';
-
-// ----------------------------------------------------------------------
-
-const icon = (name) => (
-  <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
-);
+import Iconify from 'src/components/iconify/iconify';
 
 const navConfig = [
   {
-    title: 'dashboard',
+    title: 'accueil',
     path: '/',
-    icon: icon('ic_analytics'),
+    icon: <Iconify icon="solar:home-2-bold-duotone" width={24} />,
   },
   {
-    title: 'user',
-    path: '/user',
-    icon: icon('ic_user'),
+    title: 'questionnaire quotidien',
+    path: '/start',
+    icon: <Iconify icon="solar:checklist-bold-duotone" width={24} />,
   },
   {
-    title: 'product',
-    path: '/products',
-    icon: icon('ic_cart'),
+    title: 'questionnaires',
+    path: '/create',
+    icon: <Iconify icon="solar:document-add-bold-duotone" width={24} />,
   },
   {
-    title: 'blog',
-    path: '/blog',
-    icon: icon('ic_blog'),
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: icon('ic_disabled'),
+    title: 'Déconnexion',
+    path: 'login',
+    icon: <Iconify icon="solar:login-3-bold-duotone" width={24} />,
   },
 ];
 
