@@ -25,14 +25,14 @@ export default function AppPositionCard({ title, subheader, chart, ...other }) {
       enabled: true,
       x: {
         formatter: function () {
-          return 'Energie/Bonne Humeur';
+          return 'Bonne Humeur/Energie';
         },
       },
       y: {
         formatter: function (val, { seriesIndex, dataPointIndex, w }) {
           const xVal = w.globals.seriesX[seriesIndex][dataPointIndex];
           const yVal = val;
-          return `Énergie: ${xVal}%<br>Bonne Humeur: ${yVal}%`;
+          return `Énergie: ${yVal}%<br>Bonne Humeur: ${xVal}%`;
         },
         title: {
           formatter: function () {
@@ -49,7 +49,7 @@ export default function AppPositionCard({ title, subheader, chart, ...other }) {
         formatter: (value) => `${value.toFixed(0)}`,
       },
       title: {
-        text: 'Énergie',
+        text: 'Bonne Humeur',
         style: {
           color: theme.palette.text.primary,
           fontSize: '12px',
@@ -64,7 +64,7 @@ export default function AppPositionCard({ title, subheader, chart, ...other }) {
         formatter: (value) => `${value.toFixed(0)}`,
       },
       title: {
-        text: 'Bonne Humeur',
+        text: 'Enérgie',
         style: {
           color: theme.palette.text.primary,
           fontSize: '12px',
